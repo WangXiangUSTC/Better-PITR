@@ -11,6 +11,7 @@ import (
 	pb "github.com/pingcap/tidb-binlog/proto/binlog"
 	tb "github.com/pingcap/tipb/go-binlog"
 	"gotest.tools/assert"
+	"math"
 )
 
 func TestMapFunc1(t *testing.T) {
@@ -60,7 +61,7 @@ func TestMapFunc1(t *testing.T) {
 	merge, err := NewMerge(files, fileSize)
 	assert.Assert(t, err == nil)
 
-	err = merge.Map()
+	_, err = merge.Map(0, math.MaxInt64)
 	assert.Assert(t, err == nil)
 
 	tb1, err := searchFiles(merge.tempDir + "/" + "test_tb1")
